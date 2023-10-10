@@ -1,6 +1,6 @@
 'use client';
 
-import {loadAllTodos, selectTodo, useDispatch, useSelector} from "@/lib/redux";
+import {addNewTodo, deleteTodo, loadAllTodos, selectTodo, updateTodo, useDispatch, useSelector} from "@/lib/redux";
 import {useEffect, useState} from "react";
 import {Todo} from "@/lib/redux/slices/todoSlice/TodoModel";
 
@@ -17,22 +17,25 @@ export default function Todo() {
 
     // dispatch handler group
     const addTodoHandler = (todo: Todo) => {
-        console.log('Add todo handler ', todo);
+        // console.log('Add todo handler ', todo);
+        dispatch(addNewTodo(todo));
     };
 
 
     const deleteTodoHandler = (todo: Todo) => {
-        console.log('Delete todo handler ', todo);
+        // console.log('Delete todo handler ', todo);
+        dispatch(deleteTodo(todo.id));
 
     }
 
     const updateToDoHandler = (todo: Todo) => {
-        console.log("Update update - ", todo);
+        // console.log("Update todo handler - ", todo);
+        dispatch(updateTodo(todo));
     };
 
 
     // component return 
-    return (<div className={'container mx-auto py-10'}>
+    return (<div className={'container mx-auto p-10'}>
 
         <h1 className={'text-3xl mb-3'}>Todo List</h1>
         <TodoInput addTodoHandler={addTodoHandler}/>
@@ -51,11 +54,15 @@ export function TodoInput({addTodoHandler}) {
     let [title, setTitle] = useState('');
 
     const btnAddHandler = () => {
-        let todo = {
+
+        // mock todo to add
+        let todo: Todo = {
             title: title,
-            completed: false
+            user_id: 2,
+            description: "This is description from button",
+            completed: false,
         }
-        setTitle('');
+        // setTitle('');
         addTodoHandler(todo);
     }
 
@@ -97,35 +104,39 @@ export function TodoItem(props: {
                 ...props.todo,
                 title: todoTitle
             };
-            console.log('Update todo ', updateTodo);
+            // console.log('Update todo ', updateTodo);
             props.updateTodo(updateTodo);
         }
     }
 
-    return <div>
+    return <div className={'bg-gray-50 p-5 rounded-2xl my-5'}>
 
-        <button type={"button"}
-                className={"bg-red-500 hover:text-white hover:ring-2 hover:ring-red-300 rounded py-2 px-3 me-4"}
-                onClick={btnDeleteTodoHandler}>
-            Delete
-        </button>
 
-        <button type={"button"}
-                className={"bg-green-500 hover:bg-green-400 hover:ring-2 hover:ring-green-300 rounded py-2 px-3 m-2"}
-                onClick={btnEditHandler}>
-            {editMode ? 'Update' : 'Edit'}
-        </button>
-        &nbsp;
+
+        <h2>ID : {props.todo.id}</h2>
 
         {
             !editMode ?
                 props.todo!.title
                 : <input type={"text"}
-                         className={'p-3'}
+                         className={'p-3 w-full'}
                          value={todoTitle}
                          onChange={(event) => setTodoTitle(event.target.value)}/>
         }
+        <div>
+            <button type={"button"}
+                    className={"bg-red-500 hover:text-white hover:ring-2 hover:ring-red-300 rounded py-2 px-3 me-4"}
+                    onClick={btnDeleteTodoHandler}>
+                Delete
+            </button>
 
+            <button type={"button"}
+                    className={"bg-green-500 hover:bg-green-400 hover:text-white hover:ring-2 hover:ring-green-300 rounded py-2 px-3 m-2"}
+                    onClick={btnEditHandler}>
+
+                {editMode ? 'Update' : 'Edit'}
+            </button>
+        </div>
 
 
     </div>;
