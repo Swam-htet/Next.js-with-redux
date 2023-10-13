@@ -141,3 +141,19 @@ export function TodoItem(props: {
 
     </div>;
 }
+
+
+
+/*
+
+student = [student object,class_ID]
+teacher = [teacher object]
+admin = []
+
+class = [{class object,students:[student object]}]]
+
+
+
+
+
+ */

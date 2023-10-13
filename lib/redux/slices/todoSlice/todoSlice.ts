@@ -30,21 +30,24 @@ export const todoSlice = createSlice({
             })
             .addCase(addNewTodo.fulfilled, (state, action) => {
                 console.log('Extra reducer fulfilled from add new todo - ', action.payload);
-                state.todos.push(action.payload);
+                state.todos.push(...action.payload);
             })
             .addCase(deleteTodo.pending, (state, action) => {
                 console.log('Extra reducer Payload from delete todo - ', action.payload);
             })
             .addCase(deleteTodo.fulfilled, (state, action) => {
                 console.log('Extra reducer fulfilled from delete todo - ', action.payload);
-                state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
+
+                let todoItem = action.payload[0];
+                state.todos = state.todos.filter(todo => todo.id !== todoItem.id);
             })
             .addCase(updateTodo.pending, (state, action) => {
                 console.log('Extra reducer Payload from delete todo - ', action.payload);
             })
             .addCase(updateTodo.fulfilled, (state, action) => {
                 console.log('Extra reducer fulfilled from delete todo - ', action.payload);
-                state.todos = state.todos.map(todo => todo.id === action.payload.id ? action.payload : todo);
+                let todoItem = action.payload[0];
+                state.todos = state.todos.map(todo => todo.id === todoItem.id ? todoItem : todo);
             })
     },
 });
