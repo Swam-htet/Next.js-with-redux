@@ -1,6 +1,6 @@
 'use client';
 
-import {addNewTodo, deleteTodo, loadAllTodos, selectTodo, updateTodo, useDispatch, useSelector} from "@/lib/redux";
+import {loadAllTodosAsync, selectTodo, useDispatch, useSelector} from "@/lib/redux";
 import {useEffect, useState} from "react";
 import {Todo} from "@/lib/redux/slices/todoSlice/TodoModel";
 
@@ -11,76 +11,76 @@ export default function Todo() {
 
     // fetch data
     useEffect(() => {
-        dispatch(loadAllTodos());
+        dispatch(loadAllTodosAsync());
     }, []);
 
 
     // dispatch handler group
-    const addTodoHandler = (todo: Todo) => {
-        // console.log('Add todo handler ', todo);
-        dispatch(addNewTodo(todo));
-    };
-
-
-    const deleteTodoHandler = (todo: Todo) => {
-        // console.log('Delete todo handler ', todo);
-        dispatch(deleteTodo(todo.id));
-
-    }
-
-    const updateToDoHandler = (todo: Todo) => {
-        // console.log("Update todo handler - ", todo);
-        dispatch(updateTodo(todo));
-    };
+    // const addTodoHandler = (todo: Todo) => {
+    //     // console.log('Add todo handler ', todo);
+    //     dispatch(addNewTodo(todo));
+    // };
+    //
+    //
+    // const deleteTodoHandler = (todo: Todo) => {
+    //     // console.log('Delete todo handler ', todo);
+    //     dispatch(deleteTodo(todo.id));
+    //
+    // }
+    //
+    // const updateToDoHandler = (todo: Todo) => {
+    //     // console.log("Update todo handler - ", todo);
+    //     dispatch(updateTodo(todo));
+    // };
 
 
     // component return 
     return (<div className={'container mx-auto p-10'}>
 
         <h1 className={'text-3xl mb-3'}>Todo List</h1>
-        <TodoInput addTodoHandler={addTodoHandler}/>
-        {
-            todos.map((todo, index) => <TodoItem key={index}
-                                                 todo={todo} deleteTodo={deleteTodoHandler}
-                                                 updateTodo={updateToDoHandler}/>)
-        }
+        {/*<TodoInput addTodoHandler={addTodoHandler}/>*/}
+        {/*{*/}
+        {/*    todos.map((todo, index) => <TodoItem key={index}*/}
+        {/*                                         todo={todo} deleteTodo={deleteTodoHandler}*/}
+        {/*                                         updateTodo={updateToDoHandler}/>)*/}
+        {/*}*/}
 
     </div>)
 }
 
 
-export function TodoInput({addTodoHandler}) {
-
-    let [title, setTitle] = useState('');
-
-    const btnAddHandler = () => {
-
-        // mock todo to add
-        let todo: Todo = {
-            title: title,
-            user_id: 2,
-            description: "This is description from button",
-            completed: false,
-        }
-        // setTitle('');
-        addTodoHandler(todo);
-    }
-
-    return (
-        <div>
-            <input type="text"
-                   className={'p-3'}
-                   placeholder={'Add Here New TODO'}
-                   onChange={(e) => {
-                       setTitle(e.target.value);
-                   }}/>
-            <button
-                className={"bg-orange-500 hover:text-white hover:ring-2 hover:ring-orange-300 rounded py-2 px-3 ms-4"}
-                onClick={btnAddHandler}>
-                Add New Todo
-            </button>
-        </div>);
-}
+// export function TodoInput({addTodoHandler}) {
+//
+//     let [title, setTitle] = useState('');
+//
+//     const btnAddHandler = () => {
+//
+//         // mock todo to add
+//         let todo: Todo = {
+//             title: title,
+//             user_id: 2,
+//             description: "This is description from button",
+//             completed: false,
+//         }
+//         // setTitle('');
+//         addTodoHandler(todo);
+//     }
+//
+//     return (
+//         <div>
+//             <input type="text"
+//                    className={'p-3'}
+//                    placeholder={'Add Here New TODO'}
+//                    onChange={(e) => {
+//                        setTitle(e.target.value);
+//                    }}/>
+//             <button
+//                 className={"bg-orange-500 hover:text-white hover:ring-2 hover:ring-orange-300 rounded py-2 px-3 ms-4"}
+//                 onClick={btnAddHandler}>
+//                 Add New Todo
+//             </button>
+//         </div>);
+// }
 
 
 export function TodoItem(props: {
@@ -113,7 +113,7 @@ export function TodoItem(props: {
 
 
 
-        <h2>ID : {props.todo.id}</h2>
+        {/*<h2>ID : {props.todo.id}</h2>*/}
 
         {
             !editMode ?
